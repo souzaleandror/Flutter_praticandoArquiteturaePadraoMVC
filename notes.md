@@ -414,3 +414,226 @@ Compreender as vantagens do MVC e desvantagens do MVC.
 Parabéns por ter concluído a primeira aula!
 
 Nos vemos na próxima aula do curso!
+
+#### 05/05/2024
+
+@02-Camadas e MVC
+
+@@01
+Preparando o ambiente
+PRÓXIMA ATIVIDADE
+
+Nesta aula, precisamos da segunda parte do projeto. Esta segunda parte é após a participação de outras pessoas da equipe no processo de desenvolvimento da aplicação.
+Bons estudos!
+
+@@02
+Camadas do MVC
+
+Após nossa conversa com Ricarth, nos reunimos com nossa equipe e implementamos o MVC (Model-View-Controller ou Modelo-Visualizador-Controlador). Distribuímos as responsabilidades entre as pessoas integrantes da equipe e chegamos aos estado atual do projeto.
+Vamos verificar, no nosso emulador, como o projeto ficou depois que as equipes o desenvolveram. Percebemos que a parte visual já está bem estruturada e funcionando. Inclusive, conseguimos clicar nos botões e perceber a transição de telas.
+
+No entanto, ainda não temos as funcionalidades. Quando tentamos adicionar um livro ou fazer uma busca, nada acontece. Portanto, temos apenas a parte visual pronta e algumas programações internas em código, como o banco de dados e a API.
+
+Vamos analisar o que ocorreu dentro do nosso projeto. Na pasta "lib", além do arquivo main.dart, temos vários arquivos. Agora focaremos em dois muito específicos: o book_database.dart e google_book_service.dart. Seguindo o MVC, basicamente temos a view pronta, porém, esses dois arquivos não se encaixam exatamente na nomenclatura MVC.
+
+O book_database.dart é onde roda toda nossa comunicação com o banco de dados. Ele está em uma camada separada, mas ainda faz parte das camadas MVC. Algo que conversamos com o Ricarth é que a arquitetura deve se moldar ao nosso projeto, e não o contrário.
+
+No MVC, temos as três camadas principais, mas precisamos adicionar mais uma camada para os serviços e mais uma camada para o nosso banco de dados nesse caso. Então começaremos a organizar esse projeto, separando as pastas representando cada camada de nossa arquitetura.
+
+Para o arquivo book_database.dart, criaremos uma pasta nova dentro da pasta lib chamada "dao". O DAO (Data Access Object ou Objeto de Acesso a Dados) é comumente usado para fazer a transferência de dados entre o banco de dados e a nossa aplicação.
+
+Após criarmos a pasta "dao", arrastaremos o arquivo book_database.dart para essa pasta. Provavelmente sua IDE, como a minha, abrirá um aviso no centro da tela perguntando se deseja refatorar o projeto para corrigir as referências desse arquivo que movemos. Clicaremos no botão de confirmação, porque queremos referenciar a nova localização desse arquivo.
+
+Feito isso, moveremos o arquivo de google_book_service.dart. Dentro da "lib", criaremos uma pasta chamada "services" (serviços). Após criarmos a pasta, moveremos o google_book_service.dart para dentro de "services" e, novamente, confirmar a refatoração das referências.
+
+Lembrete: A nomenclatura de pastas pode variar de acordo com a equipe em que estamos trabalhando. Esse é um padrão que costuma ser seguido, mas algumas equipes podem adotar outro tipo de nomenclatura.
+Até o momento, apenas separamos alguns arquivos em novas pastas. Por mais que essa mudança pareça pequena, é muito importante para organizar o projeto. Anteriormente questionamos se o projeto estava organizado e era de fácil manutenção, e são esses problemas que que estamos resolvendo.
+
+Mesmo que as equipes tenham desenvolvido as páginas, os componentes, os serviços e os DAOs, elas não separaram os conteúdos pensando que seriam camadas diferentes. Portanto, já existe ali uma organização prévia, mas nós estamos reorganizando e os colocando nas pastas correspondentes.
+
+Agora salvaremos todos os nossos arquivos de DAO e de Services e o próximo passo será organizar corretamente nossas views. Faremos isso a seguir.
+
+@@03
+Reestruturando o projeto com a pasta View
+
+Dando continuidade à organização do projeto, faltaram as nossas views, que são a parte visual que fazem uma ponte de comunicação entre a pessoa usuária e a nossa aplicação, ou seja, as nossas telas. Portanto, todos os arquivos restantes dentro da pasta "lib" são parte da nossa view.
+Sendo assim, atualmente falta as models e os controllers das nossas camadas do MVC. Portanto, basicamente, precisamos organizar os arquivos restantes dentro de uma pasta chamada "views" ou "screens" (telas).
+
+Como disse no vídeo anterior, a nomenclatura pode mudar dependendo de como sua equipe trabalha. Em geral, no desenvolvimento mobile e em algumas partes de Front-end, o pessoal chama a pasta com as telas de "screens, ou seja, em mobile é comum nomear a pasta de views como "screens".
+
+Então criaremos uma nova pasta dentro da "lib", chamada de "screens". Depois moveremos todos os arquivos de tela para dentro da pasta que acabamos de criar. Moveremos um arquivo de cada vez, caso contrário ele não fará a refatoração automática de cada arquivo.
+
+Movemos os arquivos um a um, confirmando o pedido de refatoração que aparece no centro da tela. O último arquivo da lista, que é o theme.dart, contém apenas tamanhos e cores, e não vamos movê-lo.
+
+o theme.dart não faz parte de "screens", "dao", "models" ou "controllers", então não tem problema deixá-lo na pasta "lib". Ele ficará separado apenas para o tema, especificamente do Flutter. Se estivéssemos desenvolvendo para Android, também poderia ficar em outro lugar. Tudo depende de onde estamos trabalhando.
+
+Separamos nossas telas, mas podemos notar que há muitos elementos que não parecem fazer sentido em ficar especificamente na tela. Por exemplo, date_input.dart é um arquivo que representa apenas o input do usuário com o nosso aplicativo. Ele não é uma tela, e sim um widget (componente).
+
+Há vários desses componentes espalhados dentro da pasta "screens" e, neste momento, estamos organizando o projeto. Portanto, nada melhor do que separarmos esses componentes que serão reutilizados por todo o projeto em uma pasta específica para eles.
+
+Esse é outro caso para o qual não existe regra do MVC especificando que esses componentes precisam ficar dentro da pasta "views" ou em outro lugar dentro de outra pasta na pasta views. Logo, podemos adaptar o nosso padrão de projeto ao que precisamos dentro da nossa aplicação.
+
+Então os componentes que serão reutilizados ficarão na pasta chamada "components", que criaremos dentro da pasta "screens". Assim que criamos a pasta, moveremos todos os componentes para "screens > components", enquanto as página completas permanecerão em "screens".
+
+O critério que usaremos para diferenciar uma tela de um componente é clicar dentro desse arquivo e ver qual é o primeiro widget codado. Os códigos SafeArea() e Scaffold() são indícios de que eles o arquivo forma uma página.
+
+Por exemplo, date_input.dart não começa com Scaffold(), ou SafeArea(), então é um componente e devemos movê-lo para a pasta "components". Lembrando que precisamos confirmar a refatoração na janela que abre no centro da tela.
+
+Lista de arquivos que serão movidos para pasta "components":
+date_input.dart
+display_text.dart
+
+entry.dart
+
+floatting_button.dart
+
+primary_button.dart
+
+second_button.dart
+
+Conforme eu fui clicando e passando pelos dos arquivos, talvez você tenha notado que há muitos comentários dentro dos códigos. Esses comentários foram criados pelas equipes pensando no fluxo da aplicação, algo que já comentamos ao analisarmos a navegação a partir do Figma. Todos esses componentes já foram construídos, mas como dependem da lógica por trás dessas funções, o fluxo foi deixado nos comentários.
+
+A seguir construiremos o controller e o model, onde introduziremos a lógica e as regras de negócio da aplicação.
+
+@@04
+Para saber mais: organizando pastas em projetos em camadas
+
+Conhecer a estrutura de um projeto em camadas é essencial para entender como os diferentes componentes do projeto se conectam e interagem. A organização de pastas é um grande passo para isso. Se feita da maneira certa, essa organização pode melhorar exponencialmente a eficiência e a produtividade de um projeto.
+Neste guia, vou explicar como organizar suas pastas em projetos em camadas, melhores práticas, e dar algumas dicas úteis.
+
+Como posso organizar meu projeto?
+Um projeto organizado em camadas é basicamente um projeto que é dividido em diferentes segmentos (pastas e arquivos) que operam independentemente, mas todas trabalham juntas como um todo. Essas camadas geralmente são estruturadas de acordo com suas funcionalidades, tornando mais fácil encontrar e modificar partes específicas do projeto.
+
+A organização das pastas, nesses casos, se resume a agrupar arquivos semelhantes e relevantes em diretórios ou pastas específicas. Esse agrupamento pode ser baseado em várias coisas, como o tipo de arquivo, a funcionalidade do arquivo, entre outros.
+
+Se a gente sair escrevendo o código sem pensar na organização, vamos ter arquivos desorganizados. Imagine você tentar consertar um bug em um projeto que tem um único arquivo com mais de 20 mil linhas de código? Seria trabalho absurdo, não é mesmo? Daí vem a ideia de separar o arquivo em camadas.
+Vamos ver algumas boas práticas e organização do projeto?
+
+Melhores práticas e dicas
+Entenda a estrutura de camadas: Antes de começar a organizar suas pastas, é preciso entender a estrutura de camadas do seu projeto. Saber o que cada camada faz e como elas interagem entre si ajudará a decidir quais arquivos devem ir para quais pastas.
+Padronize e aplique uma nomeação consistente: Certifique-se de nomear suas pastas de forma consistente. Isso significa que se você está nomeando suas pastas baseado na funcionalidade, continue fazendo isso por todo o projeto. Isso ajuda a criar uma estrutura lógica e fácil de entender.
+Evite criar muitas pastas: Às vezes, pode ser tentador criar uma nova pasta para cada pequeno aspecto do seu projeto. No entanto, isso pode resultar em uma estrutura de diretório complexa e desorganizada. Em vez disso, tente agrupar arquivos semelhantes juntos em uma única pasta.
+Documente sua estrutura: Por último, mas não menos importante, documente sua estrutura de pastas. Isso não só ajudará outras pessoas a entenderem seu projeto, mas também será útil para você no futuro.
+A organização de pastas em projetos em camadas é uma habilidade essencial para qualquer um que trabalhe com projetos complexos. Ao seguir as melhores práticas e dicas mencionadas acima, você pode criar uma estrutura de projeto clara, lógica e eficiente.
+
+Lembre-se, a chave para uma boa organização de pastas é a consistência e a simplicidade. Então, vá em frente e comece a organizar suas pastas (mas sem exageros)!
+
+@@05
+Aprofundando no MVC
+
+O próximo passo é desenvolvermos as models, os controllers e as builds, que já estão prontas. Antes de começarmos a realmente a montar models e controllers, precisamos entender melhor o que é a sigla MVC.
+Quando conversamos com Richard sobre o que era MVC e sobre arquitetura, aprendemos superficialmente o conceito de MVC. Agora, nos aprofundaremos mais para entendermos o que são cada uma das camadas dentro desse padrão de projeto.
+
+Começando a explicação do que significa a sigla MVC, "M" se refere à model (modelo), "V" à view e "C" ao controller (controlador).
+
+Pensando no conceito de orientação a objetos, a model é a representação ou abstração de alguma informação que temos em nosso aplicativo. No nosso caso do Grimório, a model pode ser o livro, que é composto por uma capa, um título e um autor.
+
+Além das informações, esse modelo também pode ter ações ou funções de validação. No entanto, é necessário termos cautela com essa função, porque ela não se trata necessariamente da lógica de regra de negócios. Estas funções são para, por exemplo, validar os campos presentes dentro dessa model.
+
+O modelo também podem representar a resposta de uma API. Ao fazermos uma busca na API, por exemplo, o Google Books, recebemos uma série de informações. Mas, se quisermos lidar apenas com algumas delas, podemos criar uma representação das informações que queremos receber da API, e ela se tornará um modelo.
+
+As models também podem representar coisas que vêm de nossa view. Por exemplo, temos um formulário de cadastro de usuário na nossa aplicação. Esse formulário tem campos para e-mail, usuário e senha, e precisaremos enviar essas informações para algum lugar. Esse conjunto de informações também pode se tornar um modelo.
+
+Modelos também podem representar uma tabela em um banco de dados, e faremos isso, porque trabalhamos com bancos de dados e temos as tabelas com as colunas. Cada representação geral de uma coluna pode ser um modelo.
+
+A view é onde fica toda a parte visual da tela de nossa aplicação. No nosso caso, as telas (screens) são onde as informações são exibidas. Nessas telas, ou views, ficam os widgets (componentes) e tudo que forma a identidade visual de nossa aplicação.
+
+Agora, o controller pode causar confusão. Quando apresentamos o controlador, dizemos que ele é a ponte entre a model e a view. No entanto, o controller é onde guardamos as regras de negócio. Ele realmente faz a ponte, mas é entre a view e as outras partes da nossa aplicação, e não somente o modelo. Onde houver lógica, haverá o controller.
+
+Por exemplo, receberemos a entrada de uma pessoa usuária através do formulário da view. Assim, teremos aquele conjunto de informações, que são enviadas da view para o controller. O controller fará a lógica de validação, passando por um banco de dados para validar a existência da conta ou necessidade de cadastro da conta.
+
+O controlador recebe essas informações do banco de dados e passa a view, informando: "você não tem cadastro. Quer se cadastrar?". Se a pessoa usuária concordar, ela preenche outro formulário, que também é enviado para o controlador.
+
+O controlador determina que precisa gerar um novo usuário e envia essa demanda para o banco de dados, que faz o salvamento das informações. Em seguida, o controller devolve essa informação para a view instrui a pessoa usuária a fazer o login. A pessoa usuária preencherá o e-mail e a senha, que será validada pelo controlador no banco de dados e, em seguida, irá liberar o acesso.
+
+De forma simplificada, essa é a função do controlador. Portanto, ele desempenha o papel intermediário na comunicação entre a visualização e a aplicação. Eu acredito que essa é uma forma mais correta de descrever a função do controlador do que dizer que ele promove a comunicação entre a view e o modelo, porque o modelo é apenas uma abstração da informação.
+
+Por exemplo, no formulário que mencionei antes, podemos coletar essas informações, armazená-las dentro de um objeto de uma model e enviar esse objeto para o banco de dados. Então não necessariamente uma ligação entre o modelo e a view, o controlador abriga as regras de negócio da aplicação.
+
+A seguir temos um exemplo de como o controller funciona:
+
+Modelo de funcionamento do controlador dentro do MVC. No centro do modelo tem um retângulo laranja onde está o fluxo: Input → Formulário → Banco de dados. Após esse fluxo, no lado esquerdo do retângulo laranja, tem mais uma seta para esquerda, que aponta para "Ação/Função". Na parte superior do retângulo laranja tem uma linha curva que conecta "Input" e "Formulário", e sobre ela está escrito "Controller". Outra linha curva conecta "Formulário" a "Banco de dados" e sobre ela também está escrito "Controller". Na parte inferior do retângulo, abaixo de "Formulário" está escrito addBook(). Abaixo de addBook() tem uma seta que aponta para a palavra baixo, onde está escrito "Controller". Abaixo de "Banco de dados" também tem uma seta que aponta para baixo, onde está escrito "Regra de negócios".
+
+Basicamente, recebemos o input da pessoa usuária, e o controller captura o formulário e envia para o banco de dados. Tudo isso é gerado através de uma função do controlador, que é onde realmente ficam as regras de negócios.
+
+A ideia agora é começarmos a construção de nossas primeiras models. Então vamos fazer isso.
+
+https://cdn1.gnarususercontent.com.br/1/935581/afe88d30-e2df-4eac-8cf5-9f271f19e70c.png
+
+@@06
+Distribuição de funcionalidades no MVC
+PRÓXIMA ATIVIDADE
+
+O desenvolvimento do “Meu Pequeno Grimório” entrou em uma nova fase!
+Agora, durante a criação da tela de pesquisa de livros, você se depara com um dilema sobre qual a camada correta para colocar determinada funcionalidade seguindo o modelo MVC (Model-View-Controller).
+
+Onde você deve colocar a funcionalidade que permite ao usuário pesquisar um livro pelo título?
+
+No Controller, porque o Controller guarda as regras de negócio e faz parte da comunicação entre a View e a aplicação.
+ 
+O Controller é responsável por receber a entrada do usuário e fazer o controle entre a View e a aplicação.
+Alternativa correta
+Na Model, já que a Model representa os dados dos objetos.
+ 
+Alternativa correta
+Em uma Screen, porque as Screens são onde as informações são mostradas.
+ 
+Alternativa correta
+Em um Widget, porque os Widgets são componentes visuais.
+ 
+Alternativa correta
+Na View, porque a View é a representação da parte visual do projeto.
+ 
+A View é responsável pela parte visual da aplicação e não pelo processamento das interações dos usuários.
+
+@@07
+Faça como eu fiz: reestruturando o projeto
+PRÓXIMA ATIVIDADE
+
+Hora da prática!
+Para refatorar o projeto e começar a utilizar o MVC, separe as seguintes pastas:
+
+dao: pasta para a conexão com o banco de dados;
+services: pasta para a conexão com a API;
+screens e components: pasta para as telas e componentes visuais da aplicação.
+O resultado esperado é que, após a reorganização das pastas seguindo o modelo MVC, o projeto continue funcionando normalmente.
+Vamos lá?
+
+Nessa aula refatoramos o projeto parta organizar melhor e começar a utilizar a arquitetura em camadas. Você pode conferir o gitHub ou ver o passo a passo:
+1 - Crie uma nova pasta chamada dao dentro de lib e coloque nela o arquivo book_database.dart;
+
+2 - Crie uma nova pasta chamada services dentro de lib e dentro dela coloque o arquivo google_book_service.dart;
+
+3 - Crie uma nova pasta chamada screens dentro de lib, e coloque dentro dela os arquivos de páginas:
+
+a) book_detals.dart;
+b) edit_details.dart;
+c) search_books.dart;
+d) login.dart;
+e) new_entry.dart;
+f) dashboard.dart;
+g) sign_up.dart;
+h) home.dart.
+4 - Crie uma nova pasta chamada components dentro de lib, e coloque dentro dela os arquivos de componentes:
+
+a) date_input.dart;
+b) display_dart;
+c) entry.dart;
+d) floating_button;
+e) primary_button;
+f) secondary_button.dart.
+Pronto! Temos nosso projeto reorganizado conforme o MVC!
+
+https://github.com/alura-cursos/3116-Flutter-MVC/tree/Aula2
+
+@@08
+O que aprendemos?
+PRÓXIMA ATIVIDADE
+
+Nessa aula, você aprendeu a:
+Reestruturar as pastas e arquivos projeto para começar a utilizar o MVC;
+Compreender o que são as models (representações de dados);
+Entender o que são as views (que cuida das telas e componentes visuais);
+Compreender que são os controllers (que faz a ligação entre diferentes partes do projeto);
+Saber como model, view e controller se integram dentro de um projeto com MVC.
+Parabéns por ter concluído mais uma aula, bons estudos!
